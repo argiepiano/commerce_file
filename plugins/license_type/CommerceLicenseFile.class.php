@@ -18,9 +18,13 @@ class CommerceLicenseFile extends CommerceLicenseBase  {
   public function accessDetails() {
     // Display the files.
     $product = $this->wrapper->product->value();
+    // Retrieve the instance of commerce_file field in this particular product type and bundle
+    $commerce_file_field = field_info_instance($this->wrapper->getPropertyInfo()['product']['type'], 'commerce_file', $this->wrapper->product->type->value());
+    // Retrieve the display type for the commerce_file field 
+    $display_type = $commerce_file_field['display']['default']['type'];
     $display = array(
       'label' => 'hidden',
-      'type' => 'commerce_file',
+      'type' => $display_type,
       'settings' => array(
         // The access check confirms that the product has a license.
         // Since we're calling this formatter from a license, there is no
